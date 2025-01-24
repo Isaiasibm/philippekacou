@@ -1,9 +1,9 @@
-const isProd = process.env.NODE_ENV === 'production';
-
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  assetPrefix: isProd ? '/philippekacou' : '',
-  basePath: isProd ? '/philippekacou' : '',
-};
-
-module.exports = nextConfig;
+    output: 'export',
+    basePath: '/philippekacou', // Nome do repositório GitHub
+    assetPrefix: '/philippekacou/', // Prefixo para os recursos estáticos
+  };
+  
+  module.exports = nextConfig;
+  
