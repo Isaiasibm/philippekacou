@@ -1,10 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    output: 'export',
-    basePath: '/philippekacou', // Nome do repositório GitHub
+    output: 'export', // Configura o Next.js para exportar arquivos estáticos
+    basePath: '/philippekacou', // Nome do repositório no GitHub
     assetPrefix: '/philippekacou/', // Prefixo para os recursos estáticos
   };
   
-  module.exports = nextConfig;
-  
-  
+  module.exports = nextConfig;  
