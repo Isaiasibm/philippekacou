@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
+import { Save, ArrowLeft } from "lucide-react"; // Ícones do ChadCN
 
 export default function AddPreaching() {
   const [formData, setFormData] = useState({
@@ -21,7 +22,7 @@ export default function AddPreaching() {
 
   return (
     <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Novo Capítulo</h1>
+      <h1 className="text-3xl font-bold mb-6">Adicionar Novo Capítulo</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -65,21 +66,22 @@ export default function AddPreaching() {
             required
           ></textarea>
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between">
+          {/* Botão Salvar Pregação */}
           <button
             type="submit"
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            className="flex items-center bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
           >
-            Salvar Pregação
+            <Save className="mr-2" /> Salvar Pregação
           </button>
 
-          {/* Botão para voltar à lista */}
+          {/* Botão Voltar à Lista */}
           <Link href="/Chapters">
             <button
               type="button"
-              className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+              className="flex items-center bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
             >
-              Voltar à Lista
+              <ArrowLeft className="mr-2" /> Voltar à Lista
             </button>
           </Link>
         </div>

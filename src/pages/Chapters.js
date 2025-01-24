@@ -1,7 +1,14 @@
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, MoreVertical, Edit, Trash } from "lucide-react";
+import { useState } from "react";
 
 export default function Chapters() {
+  const [openDropdown, setOpenDropdown] = useState(null);
+
+  const toggleDropdown = (chapterNumber) => {
+    setOpenDropdown((prev) => (prev === chapterNumber ? null : chapterNumber));
+  };
+
   const chapters = [
     {
       number: "Kacou 1",
@@ -26,11 +33,12 @@ export default function Chapters() {
     <div>
       <h1 className="text-3xl font-bold mb-6">Capítulos do Livro</h1>
 
-      <div className="flex justify-end">
+      {/* Botão adicionar capítulo */}
+      <div className="flex justify-end mb-4">
         <Link href="add-preaching">
-          <button className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 flex items-center">
+          <button className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 flex items-center shadow-md">
             <Plus className="mr-2" />
-            Adicionar Pregação
+            Adicionar Capítulo
           </button>
         </Link>
       </div>
@@ -40,14 +48,64 @@ export default function Chapters() {
         {chapters.map((chapter) => (
           <div
             key={chapter.number}
-            className="flex items-start p-4 rounded-md shadow-sm bg-white"
+            className="flex items-center justify-between p-4 rounded-md shadow-sm bg-white"
           >
-            <div className="text-lg font-semibold text-gray-700 mr-4">
-              {chapter.number}
-            </div>
+            {/* Informações do capítulo */}
             <div>
+              <div className="text-lg font-semibold text-gray-700">
+                {chapter.number}
+              </div>
               <div className="text-lg font-bold">{chapter.title}</div>
               <div className="text-sm text-gray-500">{chapter.description}</div>
+            </div>
+
+            {/* Dropdown de Ações */}
+            <div className="relative">
+              <button
+                onClick={() => toggleDropdown(chapter.number)}
+                className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 focus:outline-none"
+              >
+                <MoreVertical />
+              </button>
+              {openDropdown === chapter.number && (
+                <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-lg border border-gray-200 z-10">
+                  <ul className="divide-y divide-gray-200">
+                    <li>
+                      <button
+                        onClick={() =>
+                          alert(`Adicionar versículo em ${chapter.number}`)
+                        }
+                        className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-left"
+                      >
+                        <Plus className="mr-2 text-green-500" />
+                        Adicionar Versículo
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() =>
+                          alert(`Atualizar versículo em ${chapter.number}`)
+                        }
+                        className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-left"
+                      >
+                        <Edit className="mr-2 text-blue-500" />
+                        Atualizar Versículo
+                      </button>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() =>
+                          alert(`Eliminar versículo em ${chapter.number}`)
+                        }
+                        className="flex items-center px-4 py-2 hover:bg-gray-100 w-full text-left"
+                      >
+                        <Trash className="mr-2 text-red-500" />
+                        Eliminar Versículo
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         ))}

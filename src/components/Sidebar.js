@@ -11,16 +11,17 @@ export const Sidebar = () => (
           <Link href="/">Home</Link>
         </li>
         <li className="flex items-center p-4 hover:bg-gray-700 cursor-pointer">
-          <User className="mr-2" />
-          <Link href="/profile">Profile</Link>
-        </li>
-        <li className="flex items-center p-4 hover:bg-gray-700 cursor-pointer">
           <BookOpen className="mr-2" />
           <Link href="/Chapters">Capítulos</Link>
         </li>
         <li className="flex items-center p-4 hover:bg-gray-700 cursor-pointer">
+          <User className="mr-2" />
+          <Link href="/profile">Usuário</Link>
+        </li>
+       
+        <li className="flex items-center p-4 hover:bg-gray-700 cursor-pointer">
           <Settings className="mr-2" />
-          <Link href="/settings">Settings</Link>
+          <Link href="/add-preaching">Settings</Link>
         </li>
       </ul>
     </nav>
