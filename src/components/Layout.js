@@ -1,14 +1,17 @@
-import { Sidebar } from "./Sidebar";
+import Sidebar from "./Sidebar";
 
-export const Layout = ({ children }) => {
+const Layout = ({ children }) => {
   return (
     <div className="flex">
-      {/* Menu lateral fixo */}
+      {/* Sidebar fixa */}
       <Sidebar />
+
       {/* Conteúdo principal */}
-      <main className="flex-1 ml-64 bg-gray-100 p-6">
+      <main className="flex-1 bg-gray-100 p-4 md:p-6 ml-0 md:ml-64 transition-all">
         {children}
       </main>
     </div>
   );
 };
+
+export default Layout;

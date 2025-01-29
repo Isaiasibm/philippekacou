@@ -1,29 +1,71 @@
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Home, Settings, User, BookOpen } from "lucide-react";
+import { Home, Settings, User, BookOpen, Menu } from "lucide-react";
 
-export const Sidebar = () => (
-  <div className="h-screen w-64 bg-gray-800 text-white fixed">
-    <div className="p-4 text-xl font-bold">Dashboard</div>
-    <nav className="mt-6">
-      <ul>
-        <li className="flex items-center p-4 hover:bg-gray-700 cursor-pointer">
-          <Home className="mr-2" />
-          <Link href="/">Home</Link>
-        </li>
-        <li className="flex items-center p-4 hover:bg-gray-700 cursor-pointer">
-          <BookOpen className="mr-2" />
-          <Link href="/Chapters">Capítulos</Link>
-        </li>
-        <li className="flex items-center p-4 hover:bg-gray-700 cursor-pointer">
-          <User className="mr-2" />
-          <Link href="/profile">Usuário</Link>
-        </li>
-       
-        <li className="flex items-center p-4 hover:bg-gray-700 cursor-pointer">
-          <Settings className="mr-2" />
-          <Link href="/add-preaching">Settings</Link>
-        </li>
-      </ul>
-    </nav>
-  </div>
-);
+const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const sidebarRef = useRef(null);
+
+  // Função para detectar clique fora do menu
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
+  return (
+    <div className="flex">
+      {/* Botão do menu - Sempre visível */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="p-3 fixed top-4 left-4 bg-gray-800 text-white rounded z-50"
+      >
+        <Menu />
+      </button>
+
+      {/* Sidebar fixa em telas médias e grandes, retrátil em telas pequenas */}
+      <div
+        ref={sidebarRef}
+        className={`fixed top-0 left-0 h-full bg-gray-800 text-white p-4 transition-transform duration-300 
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+        md:translate-x-0 md:w-64`}
+      >
+        <div className="text-xl font-bold mb-6">Dashboard</div>
+        <nav>
+          <ul className="space-y-2">
+            <li className="flex items-center p-2 hover:bg-gray-700 rounded">
+              <Home className="mr-2" />
+              <Link href="/" onClick={() => setIsOpen(false)}>Home</Link>
+            </li>
+            <li className="flex items-center p-2 hover:bg-gray-700 rounded">
+              <User className="mr-2" />
+              <Link href="/profile" onClick={() => setIsOpen(false)}>Usuário</Link>
+            </li>
+            <li className="flex items-center p-2 hover:bg-gray-700 rounded">
+              <BookOpen className="mr-2" />
+              <Link href="/Chapters" onClick={() => setIsOpen(false)}>Capítulos</Link>
+            </li>
+            <li className="flex items-center p-2 hover:bg-gray-700 rounded">
+              <Settings className="mr-2" />
+              <Link href="/settings" onClick={() => setIsOpen(false)}>Settings</Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  );
+};
+
+export default Sidebar;
