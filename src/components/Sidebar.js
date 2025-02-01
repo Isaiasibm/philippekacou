@@ -1,33 +1,10 @@
-import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Home, Settings, User, BookOpen, Menu } from "lucide-react";
 
-const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const sidebarRef = useRef(null);
-
-  // Função para detectar clique fora do menu
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
-
+const Sidebar = ({ isOpen, setIsOpen }) => {
   return (
-    <div className="flex">
-      {/* Botão do menu - Sempre visível */}
+    <div>
+      {/* Botão para abrir/fechar o menu */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="p-3 fixed top-4 left-4 bg-gray-800 text-white rounded z-50"
@@ -37,10 +14,8 @@ const Sidebar = () => {
 
       {/* Sidebar fixa em telas médias e grandes, retrátil em telas pequenas */}
       <div
-        ref={sidebarRef}
         className={`fixed top-0 left-0 h-full bg-gray-800 text-white p-4 transition-transform duration-300 
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} 
-        md:translate-x-0 md:w-64`}
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:w-64`}
       >
         <div className="text-xl font-bold mb-6">Dashboard</div>
         <nav>

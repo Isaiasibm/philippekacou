@@ -1,13 +1,16 @@
-import Sidebar from "./Sidebar";
+import { useState } from "react";
+import Sidebar from "@/components/Sidebar";
 
 const Layout = ({ children }) => {
+  const [isOpen, setIsOpen] = useState(false); // Estado do menu
+
   return (
     <div className="flex">
-      {/* Sidebar fixa */}
-      <Sidebar />
+      {/* Passamos o estado para a Sidebar */}
+      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
-      {/* Conteúdo principal */}
-      <main className="flex-1 bg-gray-100 p-4 md:p-6 ml-0 md:ml-64 transition-all">
+      {/* Conteúdo principal, ajustando margem com base no estado da Sidebar */}
+      <main className={`flex-1 p-4 md:p-6 transition-all duration-300 ${isOpen ? "ml-64" : "ml-0 md:ml-64"}`}>
         {children}
       </main>
     </div>
